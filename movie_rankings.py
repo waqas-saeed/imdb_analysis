@@ -72,14 +72,16 @@ def get_most_credited(
         top_10_movies_df: DataFrame
         ) -> DataFrame:
 
-    """ This function will return the most credited actors """
+    """ This function will return top 10 movies along with the most credited persons
+    :param names_df: DataFrame - The names data
+    :param principal_df: DataFrame - The principal data
+    :param top_10_movies_df: DataFrame - The top 10 movies
+    :return: DataFrame - The top 10 movies with the most credited persons
+    """
     movies_with_principals = (
         top_10_movies_df
         .join(principal_df, on="tconst", how="inner")
     )
-    # movies_with_principals.write.parquet("temp_data/movies_with_principals", mode="overwrite")
-    # top_10_movies_df.write.parquet("temp_data/top_10_movies", mode="overwrite")
-    # names_df.write.parquet("temp_data/names", mode="overwrite")
 
     actor_category = (
         movies_with_principals
@@ -108,21 +110,6 @@ def get_most_credited(
         .select("tconst", "nconst", "movie_rank", "primaryTitle", "primaryName", "credit_count", "credit_category")
     )
 
-    # actor_category = (
-    #     movies_with_principals
-    #     .groupBy("tconst", "nconst")
-    #     .agg(F.collect_list("category").alias("category"))
-    #     .select("tconst", "nconst", "category")
-    # )
-    # # actor_category.show()
-    # princeipal_with_credit_count = movies_with_principals.groupBy("tconst", "nconst").agg(F.countDistinct("category").alias("credit_count"))
-    # (
-    #     princeipal_with_credit_count
-    #     .join(top_10_movies_df, on="tconst", how="inner")
-    #     .join(names_df, on="nconst", how="inner")
-    #     .orderBy(F.col("rank").asc(), F.col("credit_count").desc())
-    #     .show(200, truncate=False)
-    # )
 
 def run_pipeline(
         spark: SparkSession,
