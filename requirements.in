@@ -1,0 +1,9 @@
+pyspark==3.5.0
+pytest
+flake8
+pandas
+ipykernel==6.29.5
+pip-tools==6.13.0
+notebook
+mockito
+chispa
