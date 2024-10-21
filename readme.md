@@ -38,7 +38,7 @@ To run this, you will need:
 
     - On Windows
 
-            myenv\Scripts\activate
+            my_venv\Scripts\activate
 
 4. Verify Python version:
 
